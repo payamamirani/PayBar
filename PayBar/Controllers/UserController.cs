@@ -10,7 +10,7 @@ using Utilities;
 
 namespace PayBar.Controllers
 {
-    public class UserController : BaseController
+    public class UserController : BaseApiController
     {
         [HttpPost]
         public IHttpActionResult Register(DataApiModel<Data.Models.Generated.PayBar.User> model)
@@ -43,6 +43,8 @@ namespace PayBar.Controllers
         {
             var user = CheckAndGetUser(model);
 
+            CheckCompleteRegister(user);
+
             if (model.DecryptData.Token != "11111")
             {
                 if (user.Token.ToLower() != model.DecryptData.Token.ToLower())
@@ -71,6 +73,8 @@ namespace PayBar.Controllers
         {
             var user = CheckAndGetUser(model);
 
+            CheckCompleteRegister(user);
+
             user.Token = MethodExtentions.GenerateToken();
             user.ModifiedOn = DateTime.Now;
             user.ModifiedBy = "API-ReSendToken";
@@ -82,19 +86,36 @@ namespace PayBar.Controllers
             return Json(new Result { success = true, error_message = "", data = null });
         }
 
+        [HttpPost]
+        public IHttpActionResult LoginUser(DataApiModel<Data.Models.Generated.PayBar.User> model)
+        {
+            var user = CheckAndGetUser(model);
+
+            return Json(new Result() { success = true, error_message = "", data = user.MasterKey });
+        }
+
         private Data.Models.Generated.PayBar.User CheckAndGetUser(DataApiModel<Data.Models.Generated.PayBar.User> model)
         {
             var user = Data.Models.Generated.PayBar.User.FirstOrDefault("where cellno = @0", model.DecryptData.CellNo);
             if (user.IsNull())
-                throw new Exception("شماره موبایل قبلا ثبت نشده است.");
-
-            if (user.Status == (int)UserStatus.Complete)
-                throw new Exception("ثبت نام قبلا تکمیل شده است.");
+                throw new Exception("کاربر یافت نشد.");
 
             if (!user.IsActive)
                 throw new Exception("کاربر غیر فعال است.");
 
             return user;
+        }
+
+        private void CheckCompleteRegister(Data.Models.Generated.PayBar.User user)
+        {
+            if (user.Status == (int)UserStatus.Complete)
+                throw new Exception("ثبت نام قبلا تکمیل شده است.");
+        }
+
+        [HttpGet]
+        public string Test()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new { cellno = "09357574769" }).Encrypt();
         }
     }
 }

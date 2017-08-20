@@ -24,6 +24,7 @@ namespace PayBar
 
             config.Services.Replace(typeof(IExceptionHandler), new CustomerExceptionHandle());
             config.Filters.Add(new MyActionFilter());
+            
         }
     }
 }

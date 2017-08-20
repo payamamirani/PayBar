@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace PayBar.Controllers
 {
-    public abstract class BaseController : ApiController
+    public abstract class BaseApiController : ApiController
     {
     }
 }
