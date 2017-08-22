@@ -72,16 +72,16 @@ namespace Test
 
         static void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            Console.Write("\r{0}%   ", e.ProgressPercentage.ToString());
+            Console.Write("\r{0}%\t", e.ProgressPercentage.ToString());
         }
 
         static void bw_DoWork(object sender, DoWorkEventArgs e)
         {
             var worker = sender as BackgroundWorker;
 
-            for (int i = 1; (i <= 10); i++)
+            for (int i = 1; (i <= 100); i++)
             {
-                if ((worker.CancellationPending == true))
+                if ((worker.CancellationPending))
                 {
                     e.Cancel = true;
                     break;
@@ -90,7 +90,7 @@ namespace Test
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(500);
-                    worker.ReportProgress((i * 10));
+                    worker.ReportProgress((i));
                 }
             }
         }
