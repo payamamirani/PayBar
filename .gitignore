@@ -4,4 +4,4 @@ _ReSharper.*
 bin
 obj
 packages
-Utilities\Key.cs
+Utilities/Key.cs
