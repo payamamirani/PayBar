@@ -12,13 +12,13 @@ namespace PayBar.Models
         [Required]
         public string Data { get; set; }
 
-        public Data.Models.Generated.PayBar.User User
-        {
-            get
-            {
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<Data.Models.Generated.PayBar.User>(AuthenticationHeaderValue.Parse(HttpContext.Current.Request.Headers["Authorization"]))
-            }
-        }
+        //public Data.Models.Generated.PayBar.User User
+        //{
+        //    get
+        //    {
+        //        return Newtonsoft.Json.JsonConvert.DeserializeObject<Data.Models.Generated.PayBar.User>(AuthenticationHeaderValue.Parse(HttpContext.Current.Request.Headers["Authorization"]))
+        //    }
+        //}
 
         public T DecryptData
         {

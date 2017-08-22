@@ -61,7 +61,7 @@ namespace PayBar.Filtters
         {
             try
             {
-                credentials = Encoding.GetEncoding("iso-8859-1").GetString(Convert.FromBase64String(credentials.Decrypt()));
+                credentials = Encoding.GetEncoding("iso-8859-1").GetString(Convert.FromBase64String(credentials)).Decrypt();
 
                 int separator = credentials.IndexOf(':');
                 string cellno = credentials.Substring(0, separator);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Utilities;
@@ -115,6 +116,8 @@ namespace PayBar.Controllers
         [HttpGet]
         public string Test()
         {
+            return "user:pass".Encrypt();
+            return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes("user:pass")).Encrypt();
             return Newtonsoft.Json.JsonConvert.SerializeObject(new { cellno = "09357574769" }).Encrypt();
         }
     }
