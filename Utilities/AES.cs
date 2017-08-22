@@ -9,9 +9,6 @@ namespace Utilities
 {
     public static class AES
     {
-        private const string Password = "1100110011001100";
-        private const string InitialVector = "0011001100110011";
-
         private static byte[] _KEY(string p)
         {
             return Encoding.UTF8.GetBytes(p);
@@ -22,7 +19,7 @@ namespace Utilities
             return Encoding.UTF8.GetBytes(i);
         }
 
-        public static string Encrypt(this string Text, string Pass = Password, string IV = InitialVector)
+        public static string Encrypt(this string Text, string Pass = Key.PASSWORD, string IV = Key.IV)
         {
             try
             {
@@ -56,7 +53,7 @@ namespace Utilities
             }
         }
 
-        public static string Decrypt(this string Text, string Pass = Password, string IV = InitialVector)
+        public static string Decrypt(this string Text, string Pass = Key.PASSWORD, string IV = Key.IV)
         {
             try
             {
