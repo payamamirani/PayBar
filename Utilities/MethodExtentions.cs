@@ -38,7 +38,7 @@ namespace Utilities
 
         public static string GenerateKey()
         {
-            var str = "0123456789ABCDEF";
+            var str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_-=+";
             var rand = new Random();
             var key = "";
 

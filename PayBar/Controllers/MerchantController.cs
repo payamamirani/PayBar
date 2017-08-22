@@ -16,11 +16,10 @@ namespace PayBar.Controllers
         public IHttpActionResult GetMerchant(DataApiModel<Data.Models.Generated.PayBar.Merchant> model)
         {
             var merchant = Data.Models.Generated.PayBar.Merchant.FirstOrDefault("where id = @0", model.DecryptData.ID);
-
             if (merchant.IsNull())
                 throw new Exception("پذیرنده یافت نشد.");
 
-            return Json(new Result { success = true, error_message = "", data = merchant });
+            return Json(new Result { success = true, error_message = "", data = Newtonsoft.Json.JsonConvert.SerializeObject(merchant).Encrypt(model.CarllerUser.MasterKey.Decrypt()) });
         }
     }
 }
