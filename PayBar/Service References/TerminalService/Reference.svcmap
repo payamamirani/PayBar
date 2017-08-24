@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="fc6bff12-1f46-4da8-9bd7-ebbdfd92e7ab" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://212.80.25.67/Payservice/TerminalService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TerminalService.xsd" MetadataType="Schema" ID="d2f21b49-c2fc-4fae-be11-7d0db6e0803f" SourceId="1" SourceUrl="https://212.80.25.67/PayService/TerminalService.svc?xsd=xsd2" />
+    <MetadataFile FileName="TerminalService1.xsd" MetadataType="Schema" ID="3c6ad353-854d-4d97-92d5-bbe8783f67d6" SourceId="1" SourceUrl="https://212.80.25.67/PayService/TerminalService.svc?xsd=xsd1" />
+    <MetadataFile FileName="TerminalService.wsdl" MetadataType="Wsdl" ID="c9ec7ad7-3fe9-4ff9-af7f-cabf4da0169e" SourceId="1" SourceUrl="https://212.80.25.67/PayService/TerminalService.svc?wsdl" />
+    <MetadataFile FileName="TerminalService.disco" MetadataType="Disco" ID="0c69c455-90a9-44ad-9637-cc6c589fb19e" SourceId="1" SourceUrl="https://212.80.25.67/PayService/TerminalService.svc?disco" />
+    <MetadataFile FileName="TerminalService2.xsd" MetadataType="Schema" ID="43bec5d5-6c92-43f3-8689-db8ecd2700c5" SourceId="1" SourceUrl="https://212.80.25.67/PayService/TerminalService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

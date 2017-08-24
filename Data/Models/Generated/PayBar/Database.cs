@@ -593,6 +593,66 @@ namespace Data.Models.Generated.PayBar
 
     
 
+	[TableName("dbo.TxnKey")]
+
+
+
+	[PrimaryKey("ID")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class TxnKey : PayBarDB.Record<TxnKey>  
+    {
+
+
+
+		[Column] public long ID { get; set; }
+
+
+
+
+
+		[Column] public string Key { get; set; }
+
+
+
+
+
+		[Column] public long UserID { get; set; }
+
+
+
+
+
+		[Column] public string IMEI { get; set; }
+
+
+
+
+
+		[Column] public DateTime ExpireDate { get; set; }
+
+
+
+
+
+		[Column] public bool IsActive { get; set; }
+
+
+
+
+
+		[Column] public DateTime CreatedOn { get; set; }
+
+
+
+	}
+
+    
+
 	[TableName("dbo.Txns")]
 
 
@@ -754,6 +814,12 @@ namespace Data.Models.Generated.PayBar
 
 
 		[Column] public int Status { get; set; }
+
+
+
+
+
+		[Column] public long? MerchantID { get; set; }
 
 
 
