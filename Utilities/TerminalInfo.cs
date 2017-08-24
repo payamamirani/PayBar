@@ -8,7 +8,7 @@ namespace Utilities
 {
     public static class TerminalInfo
     {
-        private const int _TerminalNo = 44060158;
+        private const int _TerminalNo = 33405722;
         private const string _TermUser = "INTEK";
         private const string _TermPass = "MOBIN";
         private const int _PosCondition = 59;
