@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TerminalService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpBinding_ITerminalService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://212.80.25.67/PayService/TerminalService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="https://212.80.25.67/PayService/TerminalService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://212.80.25.67/PayService/TerminalService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/I2S.PayService" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ITerminalService_PayBill_InputMessage">
+    <wsdl:part name="parameters" element="tns:PayBill" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_PayBill_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PayBillResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_InstallmentBill_InputMessage">
+    <wsdl:part name="parameters" element="tns:InstallmentBill" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_InstallmentBill_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InstallmentBillResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_UDBill_InputMessage">
+    <wsdl:part name="parameters" element="tns:UDBill" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_UDBill_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UDBillResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_BuyCharge_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuyCharge" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_BuyCharge_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuyChargeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_Topup_InputMessage">
+    <wsdl:part name="parameters" element="tns:Topup" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_Topup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TopupResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_Purchase_InputMessage">
+    <wsdl:part name="parameters" element="tns:Purchase" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_Purchase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PurchaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_GetBillStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBillStatus" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_GetBillStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBillStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_ConfirmTxn_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmTxn" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_ConfirmTxn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmTxnResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_ReverseTxn_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReverseTxn" />
+  </wsdl:message>
+  <wsdl:message name="ITerminalService_ReverseTxn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReverseTxnResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ITerminalService">
+    <wsdl:operation name="PayBill">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITerminalService/PayBill" message="tns:ITerminalService_PayBill_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITerminalService/PayBillResponse" message="tns:ITerminalService_PayBill_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InstallmentBill">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITerminalService/InstallmentBill" message="tns:ITerminalService_InstallmentBill_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITerminalService/InstallmentBillResponse" message="tns:ITerminalService_InstallmentBill_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UDBill">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITerminalService/UDBill" message="tns:ITerminalService_UDBill_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITerminalService/UDBillResponse" message="tns:ITerminalService_UDBill_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuyCharge">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITerminalService/BuyCharge" message="tns:ITerminalService_BuyCharge_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITerminalService/BuyChargeResponse" message="tns:ITerminalService_BuyCharge_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Topup">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITerminalService/Topup" message="tns:ITerminalService_Topup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITerminalService/TopupResponse" message="tns:ITerminalService_Topup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Purchase">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITerminalService/Purchase" message="tns:ITerminalService_Purchase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITerminalService/PurchaseResponse" message="tns:ITerminalService_Purchase_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBillStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITerminalService/GetBillStatus" message="tns:ITerminalService_GetBillStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITerminalService/GetBillStatusResponse" message="tns:ITerminalService_GetBillStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmTxn">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITerminalService/ConfirmTxn" message="tns:ITerminalService_ConfirmTxn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITerminalService/ConfirmTxnResponse" message="tns:ITerminalService_ConfirmTxn_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReverseTxn">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITerminalService/ReverseTxn" message="tns:ITerminalService_ReverseTxn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITerminalService/ReverseTxnResponse" message="tns:ITerminalService_ReverseTxn_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ITerminalService" type="tns:ITerminalService">
+    <wsp:PolicyReference URI="#BasicHttpBinding_ITerminalService_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PayBill">
+      <soap:operation soapAction="http://tempuri.org/ITerminalService/PayBill" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InstallmentBill">
+      <soap:operation soapAction="http://tempuri.org/ITerminalService/InstallmentBill" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UDBill">
+      <soap:operation soapAction="http://tempuri.org/ITerminalService/UDBill" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuyCharge">
+      <soap:operation soapAction="http://tempuri.org/ITerminalService/BuyCharge" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Topup">
+      <soap:operation soapAction="http://tempuri.org/ITerminalService/Topup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Purchase">
+      <soap:operation soapAction="http://tempuri.org/ITerminalService/Purchase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBillStatus">
+      <soap:operation soapAction="http://tempuri.org/ITerminalService/GetBillStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmTxn">
+      <soap:operation soapAction="http://tempuri.org/ITerminalService/ConfirmTxn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReverseTxn">
+      <soap:operation soapAction="http://tempuri.org/ITerminalService/ReverseTxn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TerminalService">
+    <wsdl:port name="BasicHttpBinding_ITerminalService" binding="tns:BasicHttpBinding_ITerminalService">
+      <soap:address location="https://212.80.25.67/PayService/TerminalService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

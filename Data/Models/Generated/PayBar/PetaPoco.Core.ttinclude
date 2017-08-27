@@ -538,6 +538,7 @@ abstract class SchemaReader
 
 class SqlServerSchemaReader : SchemaReader
 {
+
 	// SchemaReader.ReadSchema
 	public override Tables ReadSchema(DbConnection connection, DbProviderFactory factory)
 	{
@@ -657,7 +658,7 @@ class SqlServerSchemaReader : SchemaReader
 		
 		return "";
 	}
-	
+
 	string GetPropertyType(string sqlType)
 	{
 		string sysType="string";
@@ -854,7 +855,7 @@ class SqlServerCeSchemaReader : SchemaReader
 		
 		return "";
 	}
-	
+
 	string GetPropertyType(string sqlType)
 	{
 		string sysType="string";

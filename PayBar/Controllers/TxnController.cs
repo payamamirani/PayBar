@@ -11,29 +11,10 @@ namespace PayBar.Controllers
 {
     public class TxnController : BaseApiController
     {
-        #region Models
-
-        public class TxnModel
-        {
-            public long Amount { get; set; }
-            public string CardNo { get; set; }
-            public string CVV2 { get; set; }
-            public string ExpDate { get; set; }
-            public string Pin { get; set; }
-        }
-
-        public class KeyTxnModel
-        {
-            public string CellNo { get; set; }
-            public string IMEI { get; set; }
-        }
-
-        #endregion
-
         [HttpPost]
         public IHttpActionResult GetKey(DataApiModel<KeyTxnModel> model)
         {
-            var anyKey = Data.Models.Generated.PayBar.TxnKey.Fetch("WHERE IsActive = 1 AND ExpireDate>= GETDATE()");
+            var anyKey = Data.Models.Generated.PayBar.TxnKey.Fetch("WHERE UserID = @0 AND IsActive = 1 AND ExpireDate>= GETDATE()", model.CallerUser.ID);
             foreach (var item in anyKey)
             {
                 item.IsActive = false;
@@ -46,12 +27,17 @@ namespace PayBar.Controllers
                 ExpireDate = DateTime.Now.AddMinutes(3),
                 IMEI = model.DecryptData.IMEI,
                 IsActive = true,
-                Key = MethodExtentions.GenerateKey().Encrypt(model.CarllerUser.MasterKey.Decrypt()),
-                UserID = model.CarllerUser.ID
+                Key = MethodExtentions.GenerateKey().Encrypt(model.CallerUser.MasterKey.Decrypt()),
+                UserID = model.CallerUser.ID
             };
 
             key.Save();
-            return Json(new Result() { success = true, error_message = "", data = key.Key.Encrypt(model.CarllerUser.MasterKey.Decrypt()) });
+
+            var user = Data.Models.Generated.PayBar.User.FirstOrDefault("WHERE ID = @0", model.CallerUser.ID);
+            user.TxnKey = key.Key;
+            user.Save();
+
+            return Json(new Result() { success = true, error_message = "", data = key.Key });
         }
 
         [HttpPost]
@@ -59,44 +45,31 @@ namespace PayBar.Controllers
         {
             var client = new TerminalService.TerminalServiceClient();
 
-            var txnResult = client.Purchase(TerminalInfo.TerminalUserName, TerminalInfo.TerminalPasswrod, TerminalInfo.TerminalNumber, TerminalInfo.TerminalTypeCode, model.DecryptData.Amount, model.CarllerUser.CellNo, model.DecryptData.CardNo, model.DecryptData.Pin, model.DecryptData.CVV2, model.DecryptData.ExpDate);
+            ServicePointManager.ServerCertificateValidationCallback += (sender1, certificate, chain, sslPolicyErrors) => true;
+            var txnResult = client.Purchase(TerminalInfo.TerminalUserName, TerminalInfo.TerminalPasswrod, TerminalInfo.TerminalNumber, TerminalInfo.TerminalTypeCode, model.DecryptData.Amount, model.CallerUser.CellNo, model.DecryptData.CardNo, model.DecryptData.Pin, model.DecryptData.CVV2, model.DecryptData.ExpDate);
 
             var txn = new Data.Models.Generated.PayBar.Txn()
             {
                 Amount = model.DecryptData.Amount,
                 BusinessDate = DateTime.Now,
                 CardNo = model.DecryptData.CardNo.Encrypt(),
-                CreatedBy = model.CarllerUser.CellNo,
+                CreatedBy = model.CallerUser.CellNo,
                 CreatedOn = DateTime.Now,
                 RespCode = txnResult.ResponseCode,
-                MerchantID = model.CarllerUser.MerchantID.Value
+                MerchantID = model.CallerUser.MerchantID.Value,
+                AddData1 = txnResult.AddData1,
+                RefNum = txnResult.RefNum,
+                ResponseCode = txnResult.ResponseCode,
+                RRN = txnResult.RRN.ToLong(),
+                TraceNo = txnResult.TraceNo.ToLong()
             };
 
             txn.Save();
 
-            int result = 0;
-            if (txnResult.ResponseCode == 0)
-                result = client.ConfirmTxn(TerminalInfo.TerminalUserName, TerminalInfo.TerminalPasswrod, TerminalInfo.TerminalNumber, model.DecryptData.Amount, txnResult.RefNum);
-
-
-
-            if (txnResult.ResponseCode == 0 && result != 0)
-                result = client.ReverseTxn(TerminalInfo.TerminalUserName, TerminalInfo.TerminalPasswrod, TerminalInfo.TerminalNumber, model.DecryptData.Amount, txnResult.RefNum);
-
-            return Json(new { });
-        }
-
-        [HttpGet]
-        public IHttpActionResult Test()
-        {
-            return Json(new
-            {
-                Data = Newtonsoft.Json.JsonConvert.SerializeObject(new KeyTxnModel()
-                {
-                    CellNo = "09357574769",
-                    IMEI = "359092059386866"
-                }).Encrypt("VDSP9JCYPho2btZ22g+Ie4xtq2UGsQ+Oin8ieJg0Xtk=".Decrypt())
-            });
+            if (txn.ResponseCode == 0)
+                return Json(new Result() { success = true, error_message = "", data = txn.RRN });
+            else
+                return Json(new Result() { success = false, error_message = txn.ResponseCode.ToString(), data = null });
         }
     }
 }

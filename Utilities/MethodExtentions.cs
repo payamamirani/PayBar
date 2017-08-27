@@ -59,5 +59,29 @@ namespace Utilities
 
             return key;
         }
+
+        public static long ToLong(this object o)
+        {
+            try
+            {
+                return Convert.ToInt64(o);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public static long? ToNullableLong(this object o)
+        {
+            try
+            {
+                return Convert.ToInt64(o);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

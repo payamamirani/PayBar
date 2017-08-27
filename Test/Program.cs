@@ -90,7 +90,7 @@ namespace Test
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(500);
-                    worker.ReportProgress((i));
+                    worker.ReportProgress(i);
                 }
             }
         }

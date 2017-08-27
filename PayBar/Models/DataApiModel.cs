@@ -5,20 +5,15 @@ using System.Linq;
 using System.Web;
 using Utilities;
 using Data.Models.Generated.PayBar;
+using Newtonsoft.Json;
 
 namespace PayBar.Models
 {
-    public class MerchantEnc
-    {
-        public string ID { get; set; }
-        public string CellNo { get; set; }
-        public string IMEI { get; set; }
-    }
-
     public class DataApiModel<T>
         where T : class
     {
         private string Password = "";
+        private string TempPassword = "";
 
         [Required]
         public string CellNo { get; set; }
@@ -26,16 +21,21 @@ namespace PayBar.Models
         [Required]
         public string Data { get; set; }
 
-        public Data.Models.Generated.PayBar.User CarllerUser
+        private Data.Models.Generated.PayBar.User _user;
+
+        public Data.Models.Generated.PayBar.User CallerUser
         {
             get
             {
                 if (typeof(T) == typeof(Data.Models.Generated.PayBar.User))
                     return null;
 
-                var u = User.FirstOrDefault("where cellno = @0", CellNo);
-                Password = u.MasterKey.Decrypt();
-                return u;
+                if (_user == null)
+                    _user = User.FirstOrDefault("where cellno = @0", CellNo);
+
+                Password = _user.MasterKey.Decrypt();
+
+                return _user;
             }
         }
 
@@ -43,15 +43,22 @@ namespace PayBar.Models
         {
             get
             {
-                var a = Password.IsNull() ? Data.Decrypt() : Data.Decrypt(Password);
+                if (typeof(T) == typeof(TxnModel))
+                {
+                    if (CallerUser.TxnKey.IsNull())
+                        throw new Exception("کلید تراکنش وجود ندارد.");
+                    TempPassword = CallerUser.TxnKey.Decrypt(CallerUser.MasterKey.Decrypt());
+                }
+
+                var a = Password.IsNull() ? Data.Decrypt() : (TempPassword.IsNull() ? Data.Decrypt(Password) : Data.Decrypt(Password).Decrypt(TempPassword));
 
                 if (typeof(T) == typeof(Data.Models.Generated.PayBar.Merchant))
                 {
-                    var merchantId = Newtonsoft.Json.JsonConvert.DeserializeObject<MerchantEnc>(a).ID.Decrypt();
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(Newtonsoft.Json.JsonConvert.SerializeObject(new { ID = merchantId }));
+                    var merchantId = JsonConvert.DeserializeObject<MerchantQrModel>(a).ID.Decrypt();
+                    return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(new { ID = merchantId }));
                 }
 
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(a);
+                return JsonConvert.DeserializeObject<T>(a);
             }
         }
     }

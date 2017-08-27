@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://212.80.25.67/PayService/TerminalService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/I2S.PayService" />
+  <xs:element name="PayBill">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="User" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pass" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="TermID" type="xs:int" />
+        <xs:element minOccurs="0" name="posCondition" type="xs:int" />
+        <xs:element minOccurs="0" name="BillID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="PayID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pan" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pin" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CVV" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ExpDate" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PayBillResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/I2S.PayService" minOccurs="0" name="PayBillResult" nillable="true" type="q1:TxnResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InstallmentBill">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="User" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pass" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="TermID" type="xs:int" />
+        <xs:element minOccurs="0" name="BillID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="PayID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pan" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pin" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CVV" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ExpDate" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InstallmentBillResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/I2S.PayService" minOccurs="0" name="InstallmentBillResult" nillable="true" type="q2:TxnResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UDBill">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="User" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pass" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="TermID" type="xs:int" />
+        <xs:element minOccurs="0" name="BillID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="PayID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pan" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pin" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CVV" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ExpDate" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UDBillResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/I2S.PayService" minOccurs="0" name="UDBillResult" nillable="true" type="q3:TxnResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BuyCharge">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="User" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pass" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="TermID" type="xs:int" />
+        <xs:element minOccurs="0" name="posCondition" type="xs:int" />
+        <xs:element minOccurs="0" name="Company" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="PriceID" type="xs:long" />
+        <xs:element minOccurs="0" name="ResNum" type="xs:long" />
+        <xs:element minOccurs="0" name="Pan" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pin" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CVV" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ExpDate" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BuyChargeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/I2S.PayService" minOccurs="0" name="BuyChargeResult" nillable="true" type="q4:TxnResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Topup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="User" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pass" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="TermID" type="xs:int" />
+        <xs:element minOccurs="0" name="posCondition" type="xs:int" />
+        <xs:element minOccurs="0" name="Company" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ChargeType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CellNo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Amount" type="xs:long" />
+        <xs:element minOccurs="0" name="ResNum" type="xs:long" />
+        <xs:element minOccurs="0" name="Pan" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pin" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CVV" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ExpDate" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TopupResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/I2S.PayService" minOccurs="0" name="TopupResult" nillable="true" type="q5:TxnResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Purchase">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="User" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pass" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="TermID" type="xs:int" />
+        <xs:element minOccurs="0" name="posCondition" type="xs:int" />
+        <xs:element minOccurs="0" name="Amount" type="xs:long" />
+        <xs:element minOccurs="0" name="ResNum" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pan" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pin" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CVV" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ExpDate" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PurchaseResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/I2S.PayService" minOccurs="0" name="PurchaseResult" nillable="true" type="q6:TxnResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBillStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="User" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Pass" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="BillID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="PayID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="TermID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBillStatusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/I2S.PayService" minOccurs="0" name="GetBillStatusResult" nillable="true" type="q7:TxnResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConfirmTxn">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AppUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="AppPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="TerminalNumber" type="xs:long" />
+        <xs:element minOccurs="0" name="Amount" type="xs:long" />
+        <xs:element minOccurs="0" name="RefNum" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConfirmTxnResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ConfirmTxnResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReverseTxn">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AppUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="AppPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="TerminalNumber" type="xs:long" />
+        <xs:element minOccurs="0" name="Amount" type="xs:long" />
+        <xs:element minOccurs="0" name="RefNum" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReverseTxnResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReverseTxnResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

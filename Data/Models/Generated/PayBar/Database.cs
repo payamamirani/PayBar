@@ -28,7 +28,7 @@
 //     Provider:               `System.Data.SqlClient`
 //     Connection String:      `Server=10.1.1.95;Initial Catalog=PayBar;user id=sa; password=**zapped**;`
 //     Schema:                 ``
-//     Include Views:          `False`
+//     Include Views:          `True`
 
 
 
@@ -419,6 +419,60 @@ namespace Data.Models.Generated.PayBar
 
     
 
+	[TableName("dbo.Jobs")]
+
+
+
+	[PrimaryKey("ID")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class Job : PayBarDB.Record<Job>  
+    {
+
+
+
+		[Column] public long ID { get; set; }
+
+
+
+
+
+		[Column] public long ModuleID { get; set; }
+
+
+
+
+
+		[Column] public string CreatedBy { get; set; }
+
+
+
+
+
+		[Column] public DateTime CreatedOn { get; set; }
+
+
+
+
+
+		[Column] public string ModifiedBy { get; set; }
+
+
+
+
+
+		[Column] public DateTime? ModifiedOn { get; set; }
+
+
+
+	}
+
+    
+
 	[TableName("dbo.Mcc")]
 
 
@@ -593,6 +647,66 @@ namespace Data.Models.Generated.PayBar
 
     
 
+	[TableName("dbo.Modules")]
+
+
+
+	[PrimaryKey("ID")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class Module : PayBarDB.Record<Module>  
+    {
+
+
+
+		[Column] public long ID { get; set; }
+
+
+
+
+
+		[Column] public string AssemblyName { get; set; }
+
+
+
+
+
+		[Column] public string ClassName { get; set; }
+
+
+
+
+
+		[Column] public string CreatedBy { get; set; }
+
+
+
+
+
+		[Column] public DateTime CreatedOn { get; set; }
+
+
+
+
+
+		[Column] public string ModifiedBy { get; set; }
+
+
+
+
+
+		[Column] public DateTime? ModifiedOn { get; set; }
+
+
+
+	}
+
+    
+
 	[TableName("dbo.TxnKey")]
 
 
@@ -727,6 +841,36 @@ namespace Data.Models.Generated.PayBar
 
 
 
+
+
+		[Column] public long? RRN { get; set; }
+
+
+
+
+
+		[Column] public long? TraceNo { get; set; }
+
+
+
+
+
+		[Column] public int ResponseCode { get; set; }
+
+
+
+
+
+		[Column] public string RefNum { get; set; }
+
+
+
+
+
+		[Column] public string AddData1 { get; set; }
+
+
+
 	}
 
     
@@ -820,6 +964,50 @@ namespace Data.Models.Generated.PayBar
 
 
 		[Column] public long? MerchantID { get; set; }
+
+
+
+
+
+		[Column] public string TxnKey { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.VwJobs")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class VwJob : PayBarDB.Record<VwJob>  
+    {
+
+
+
+		[Column] public long ID { get; set; }
+
+
+
+
+
+		[Column] public long ModuleID { get; set; }
+
+
+
+
+
+		[Column] public string AssemblyName { get; set; }
+
+
+
+
+
+		[Column] public string ClassName { get; set; }
 
 
 

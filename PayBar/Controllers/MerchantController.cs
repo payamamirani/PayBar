@@ -19,7 +19,7 @@ namespace PayBar.Controllers
             if (merchant.IsNull())
                 throw new Exception("پذیرنده یافت نشد.");
 
-            return Json(new Result { success = true, error_message = "", data = Newtonsoft.Json.JsonConvert.SerializeObject(merchant).Encrypt(model.CarllerUser.MasterKey.Decrypt()) });
+            return Json(new Result { success = true, error_message = "", data = Newtonsoft.Json.JsonConvert.SerializeObject(merchant).Encrypt(model.CallerUser.MasterKey.Decrypt()) });
         }
     }
 }
