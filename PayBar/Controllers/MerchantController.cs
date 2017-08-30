@@ -13,7 +13,7 @@ namespace PayBar.Controllers
     public class MerchantController : BaseApiController
     {
         [HttpPost]
-        public IHttpActionResult GetMerchant(DataApiModel<Data.Models.Generated.PayBar.Merchant> model)
+        public IHttpActionResult GetMerchant(DataApiModel<MerchantModel> model)
         {
             var merchant = Data.Models.Generated.PayBar.Merchant.FirstOrDefault("where id = @0", model.DecryptData.ID);
             if (merchant.IsNull())

@@ -12,5 +12,6 @@ namespace PayBar.Models
         public string CVV2 { get; set; }
         public string ExpDate { get; set; }
         public string Pin { get; set; }
+        public long MerchantID { get; set; }
     }
 }

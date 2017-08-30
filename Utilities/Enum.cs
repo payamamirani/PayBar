@@ -11,4 +11,11 @@ namespace Utilities
         UnComplete = 0,
         Complete = 1
     }
+
+    public enum Prcode
+    {
+        Purchase = 0,
+        Charge = 15,
+        Bill = 17
+    }
 }

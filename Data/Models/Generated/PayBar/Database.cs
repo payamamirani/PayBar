@@ -469,6 +469,12 @@ namespace Data.Models.Generated.PayBar
 
 
 
+
+
+		[Column] public bool IsActive { get; set; }
+
+
+
 	}
 
     
@@ -703,6 +709,126 @@ namespace Data.Models.Generated.PayBar
 
 
 
+
+
+		[Column] public bool IsActive { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.RequestMerchant")]
+
+
+
+	[PrimaryKey("ID")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class RequestMerchant : PayBarDB.Record<RequestMerchant>  
+    {
+
+
+
+		[Column] public long ID { get; set; }
+
+
+
+
+
+		[Column] public string Name { get; set; }
+
+
+
+
+
+		[Column] public string Family { get; set; }
+
+
+
+
+
+		[Column] public string EnName { get; set; }
+
+
+
+
+
+		[Column] public string EnFamily { get; set; }
+
+
+
+
+
+		[Column] public string PicUrl { get; set; }
+
+
+
+
+
+		[Column] public long MCCID { get; set; }
+
+
+
+
+
+		[Column] public string CellNo { get; set; }
+
+
+
+
+
+		[Column] public string Address { get; set; }
+
+
+
+
+
+		[Column] public long? UserID { get; set; }
+
+
+
+
+
+		[Column] public DateTime CreatedOn { get; set; }
+
+
+
+
+
+		[Column] public string CreatedBy { get; set; }
+
+
+
+
+
+		[Column] public DateTime? ModifiedOn { get; set; }
+
+
+
+
+
+		[Column] public string ModifiedBy { get; set; }
+
+
+
+
+
+		[Column] public bool? IsApproved { get; set; }
+
+
+
+
+
+		[Column] public bool IsActive { get; set; }
+
+
+
 	}
 
     
@@ -868,6 +994,24 @@ namespace Data.Models.Generated.PayBar
 
 
 		[Column] public string AddData1 { get; set; }
+
+
+
+
+
+		[Column] public long? TerminalNo { get; set; }
+
+
+
+
+
+		[Column] public long? UserID { get; set; }
+
+
+
+
+
+		[Column] public int? Prcode { get; set; }
 
 
 

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace PayBar.Models
 {
-    public class KeyTxnModel
+    public class UserModel
     {
-        public string CellNo { get; set; }
+        [Required]
         public string IMEI { get; set; }
     }
 }

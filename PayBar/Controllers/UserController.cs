@@ -14,9 +14,9 @@ namespace PayBar.Controllers
     public class UserController : BaseApiController
     {
         [HttpPost]
-        public IHttpActionResult Register(DataApiModel<Data.Models.Generated.PayBar.User> model)
+        public IHttpActionResult Register(DataApiModel<UserModel> model)
         {
-            var user = Data.Models.Generated.PayBar.User.FirstOrDefault("where cellno = @0", model.DecryptData.CellNo);
+            var user = Data.Models.Generated.PayBar.User.FirstOrDefault("where cellno = @0", model.CellNo);
             if (user.IsNull())
                 user = new Data.Models.Generated.PayBar.User()
                 {
@@ -25,7 +25,7 @@ namespace PayBar.Controllers
                     IsActive = true,
                     MasterKey = MethodExtentions.GenerateKey().Encrypt(),
                     Password = "",
-                    CellNo = model.DecryptData.CellNo
+                    CellNo = model.CellNo
                 };
 
             user.IMEI = model.DecryptData.IMEI;
@@ -46,9 +46,9 @@ namespace PayBar.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult CompleteRegister(DataApiModel<Data.Models.Generated.PayBar.User> model)
+        public IHttpActionResult CompleteRegister(DataApiModel<UserTokenModel> model)
         {
-            var user = CheckAndGetUser(model);
+            var user = CheckAndGetUser(model.CellNo);
 
             CheckCompleteRegister(user);
 
@@ -67,9 +67,9 @@ namespace PayBar.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult ReSendToken(DataApiModel<Data.Models.Generated.PayBar.User> model)
+        public IHttpActionResult ReSendToken(DataApiModel<UserModel> model)
         {
-            var user = CheckAndGetUser(model);
+            var user = CheckAndGetUser(model.CellNo);
 
             CheckCompleteRegister(user);
 
@@ -84,9 +84,9 @@ namespace PayBar.Controllers
             return Json(new Result { success = true, error_message = "", data = null });
         }
 
-        private Data.Models.Generated.PayBar.User CheckAndGetUser(DataApiModel<Data.Models.Generated.PayBar.User> model)
+        private Data.Models.Generated.PayBar.User CheckAndGetUser(string cellNo)
         {
-            var user = Data.Models.Generated.PayBar.User.FirstOrDefault("where cellno = @0", model.DecryptData.CellNo);
+            var user = Data.Models.Generated.PayBar.User.FirstOrDefault("where cellno = @0", cellNo);
             if (user.IsNull())
                 throw new Exception("کاربر یافت نشد.");
 

@@ -27,7 +27,7 @@ namespace PayBar.Models
         {
             get
             {
-                if (typeof(T) == typeof(Data.Models.Generated.PayBar.User))
+                if (typeof(T) == typeof(UserModel) || typeof(T) == typeof(UserTokenModel))
                     return null;
 
                 if (_user == null)
@@ -50,9 +50,9 @@ namespace PayBar.Models
                     TempPassword = CallerUser.TxnKey.Decrypt(CallerUser.MasterKey.Decrypt());
                 }
 
-                var a = Password.IsNull() ? Data.Decrypt() : (TempPassword.IsNull() ? Data.Decrypt(Password) : Data.Decrypt(Password).Decrypt(TempPassword));
+                var a = Password.IsNull() ? Data.Decrypt() : (TempPassword.IsNull() ? Data.Decrypt(Password) : Data.Decrypt(Password + TempPassword));
 
-                if (typeof(T) == typeof(Data.Models.Generated.PayBar.Merchant))
+                if (typeof(T) == typeof(MerchantModel))
                 {
                     var merchantId = JsonConvert.DeserializeObject<MerchantQrModel>(a).ID.Decrypt();
                     return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(new { ID = merchantId }));

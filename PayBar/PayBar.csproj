@@ -168,10 +168,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DataApiModel.cs" />
-    <Compile Include="Models\KeyTxnModel.cs" />
+    <Compile Include="Models\MerchantModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\MerchantQrModel.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\TxnModel.cs" />
+    <Compile Include="Models\UserTokenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\TerminalService\Reference.cs">
       <AutoGen>True</AutoGen>

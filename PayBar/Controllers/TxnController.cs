@@ -12,7 +12,7 @@ namespace PayBar.Controllers
     public class TxnController : BaseApiController
     {
         [HttpPost]
-        public IHttpActionResult GetKey(DataApiModel<KeyTxnModel> model)
+        public IHttpActionResult GetKey(DataApiModel<UserModel> model)
         {
             var anyKey = Data.Models.Generated.PayBar.TxnKey.Fetch("WHERE UserID = @0 AND IsActive = 1 AND ExpireDate>= GETDATE()", model.CallerUser.ID);
             foreach (var item in anyKey)
@@ -46,6 +46,7 @@ namespace PayBar.Controllers
             var client = new TerminalService.TerminalServiceClient();
 
             ServicePointManager.ServerCertificateValidationCallback += (sender1, certificate, chain, sslPolicyErrors) => true;
+
             var txnResult = client.Purchase(TerminalInfo.TerminalUserName, TerminalInfo.TerminalPasswrod, TerminalInfo.TerminalNumber, TerminalInfo.TerminalTypeCode, model.DecryptData.Amount, model.CallerUser.CellNo, model.DecryptData.CardNo, model.DecryptData.Pin, model.DecryptData.CVV2, model.DecryptData.ExpDate);
 
             var txn = new Data.Models.Generated.PayBar.Txn()
@@ -56,12 +57,15 @@ namespace PayBar.Controllers
                 CreatedBy = model.CallerUser.CellNo,
                 CreatedOn = DateTime.Now,
                 RespCode = txnResult.ResponseCode,
-                MerchantID = model.CallerUser.MerchantID.Value,
+                MerchantID = model.DecryptData.MerchantID,
                 AddData1 = txnResult.AddData1,
                 RefNum = txnResult.RefNum,
                 ResponseCode = txnResult.ResponseCode,
                 RRN = txnResult.RRN.ToLong(),
-                TraceNo = txnResult.TraceNo.ToLong()
+                TraceNo = txnResult.TraceNo.ToLong(),
+                TerminalNo = TerminalInfo.TerminalNumber,
+                UserID = model.CallerUser.ID,
+                Prcode = Prcode.Purchase.ToInt()
             };
 
             txn.Save();

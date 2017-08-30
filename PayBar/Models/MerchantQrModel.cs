@@ -5,10 +5,8 @@ using System.Web;
 
 namespace PayBar.Models
 {
-    public class MerchantQrModel
+    public class MerchantQrModel : UserModel
     {
         public string ID { get; set; }
-        public string CellNo { get; set; }
-        public string IMEI { get; set; }
     }
 }

@@ -83,5 +83,29 @@ namespace Utilities
                 return null;
             }
         }
+
+        public static int ToInt(this object o)
+        {
+            try
+            {
+                return Convert.ToInt32(o);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public static int? ToNullableInt(this object o)
+        {
+            try
+            {
+                return Convert.ToInt32(o);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

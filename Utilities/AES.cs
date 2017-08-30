@@ -57,7 +57,7 @@ namespace Utilities
         {
             try
             {
-                if (Pass.Length != 16)
+                if (Pass.Length != 16 && Pass.Length != 32)
                     throw new Exception("طول رمز نادرست است.");
 
                 if (IV.Length != 16)
