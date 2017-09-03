@@ -6,26 +6,42 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Utilities;
 
 namespace PayBar.Controllers
 {
     public class NotificationController : ApiController
     {
-        public IHttpActionResult Send()
+        [HttpPost]
+        public IHttpActionResult AddPlayer(DataApiModel<PlayerModel> model)
         {
-            var client = new RestClient("https://onesignal.com/api/v1/notifications");
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("cache-control", "no-cache");
-            request.AddHeader("content-type", "application/json");
-            request.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(new
+            var player = Data.Models.Generated.PayBar.Player.FirstOrDefault("WHERE PlayerID = @0 AND IMEI = @1", model.DecryptData.PlayerID, model.DecryptData.IMEI);
+            if (!player.IsNull())
+                throw new Exception("PlayerID is already saved.");
+
+            player = new Data.Models.Generated.PayBar.Player()
             {
-                app_id = "d784d720-5a60-4d6a-b3f2-0b1cef171d31",
-                contents = new { en = "Test Payam" },
-                headings = new { en = "FF" },
-                include_player_ids = new List<string> { "f98f34da-b817-4242-831d-c2e1eac191d7" }
-            }), ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
+                CreatedBy = "API-AddPlayer",
+                CreatedOn = DateTime.Now,
+                IMEI = model.DecryptData.IMEI,
+                IsActive = true,
+                IsComplete = false,
+                PlayerID = model.DecryptData.PlayerID
+            };
+
+            player.Save();
+
             return Json(new Result() { success = true, error_message = "", data = null });
+        }
+
+        [HttpPost]
+        private IHttpActionResult Send(DataApiModel<NotificationModel> model)
+        {
+            var res = model.DecryptData.Message.SendNotification(model.DecryptData.Title, model.DecryptData.Players);
+            if (res)
+                return Json(new Result() { success = true, error_message = "", data = null });
+            else
+                return Json(new Result() { success = false, error_message = "", data = null });
         }
     }
 }

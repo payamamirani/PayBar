@@ -27,11 +27,14 @@ namespace PayBar.Models
         {
             get
             {
-                if (typeof(T) == typeof(UserModel) || typeof(T) == typeof(UserTokenModel))
+                if (typeof(T) == typeof(UserModel) || typeof(T) == typeof(UserTokenModel) || typeof(T) == typeof(PlayerModel))
                     return null;
 
                 if (_user == null)
                     _user = User.FirstOrDefault("where cellno = @0", CellNo);
+
+                if (_user == null)
+                    throw new Exception("User Not Found.");
 
                 Password = _user.MasterKey.Decrypt();
 

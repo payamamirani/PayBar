@@ -13,6 +13,9 @@ namespace Jobs
 {
     class Program
     {
+
+        static List<string> RunningTask = new List<string>();
+
         static void Main(string[] args)
         {
             Console.WriteLine("Begin");
@@ -20,13 +23,24 @@ namespace Jobs
             ServicePointManager.ServerCertificateValidationCallback += (sender1, certificate, chain, sslPolicyErrors) => true;
             try
             {
-                var jobs = Data.Models.Generated.PayBar.VwJob.Fetch("WHERE 1 = 1");
+                var jobs = Data.Models.Generated.PayBar.VwJob.Fetch("WHERE IsActive = 1");
 
                 foreach (var item in jobs)
-                    Task.Run(() => CreateInstanseForJob(item));
+                    Console.WriteLine(item.ClassName);
+
                 while (true)
                 {
-                    Thread.Sleep(60000);
+                    foreach (var job in jobs)
+                    {
+                        var task = string.Format("{0}#{1}", job.ClassName, "Do");
+                        if (!RunningTask.Contains(task))
+                        {
+                            Task.Run(() => CreateInstanseForJob(job));
+                            RunningTask.Add(task);
+                        }
+                    }
+
+                    Thread.Sleep(500);
                 }
             }
             catch (Exception ex)
@@ -38,14 +52,24 @@ namespace Jobs
             Console.ReadLine();
         }
 
-        static void CreateInstanseForJob(Data.Models.Generated.PayBar.VwJob item)
+        static void CreateInstanseForJob(Data.Models.Generated.PayBar.VwJob job)
         {
-            Type type = Type.GetType(item.ClassName);
-            object instance = Activator.CreateInstance(type);
-            MethodInfo method = instance.GetType().GetMethod("Do");
-            object[] data = new object[0];
-            Console.WriteLine(item.ClassName);
-            object result = method.Invoke(instance, data);
+            try
+            {
+                Type type = Type.GetType(job.ClassName);
+                object instance = Activator.CreateInstance(type);
+                MethodInfo method = instance.GetType().GetMethod("Do");
+                object[] data = new object[0];
+                object result = method.Invoke(instance, data);
+
+                var task = string.Format("{0}#{1}", job.ClassName, "Do");
+                RunningTask.Remove(task);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                LogBiz.SaveError("CreateInstanseForJob", ex);
+            }
         }
     }
 }

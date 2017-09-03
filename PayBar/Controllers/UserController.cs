@@ -41,6 +41,11 @@ namespace PayBar.Controllers
             user.Save();
 
             // ToDo: Send SMS To User For Complete Register
+            var player = Data.Models.Generated.PayBar.Player.FirstOrDefault("WHERE IMEI = @0", user.IMEI);
+            if (!player.IsNull())
+            {
+                ("Your Authentication Code : " + user.Token).SendNotification("Authentication Code", player.PlayerID);
+            }
 
             return Json(new Result { success = true, error_message = "", data = null });
         }
@@ -52,6 +57,10 @@ namespace PayBar.Controllers
 
             CheckCompleteRegister(user);
 
+            //var player = Data.Models.Generated.PayBar.Player.FirstOrDefault("WHERE IMEI = @0", model.DecryptData.IMEI);
+            //if (player.IsNull())
+            //    throw new Exception("Player Not Found.");
+
             if (model.DecryptData.Token != "11111")
             {
                 if (user.Token.ToLower() != model.DecryptData.Token.ToLower())
@@ -62,6 +71,13 @@ namespace PayBar.Controllers
             user.ModifiedBy = "API-CompleteRegister-ValidToken";
             user.ModifiedOn = DateTime.Now;
             user.Save();
+
+            //player.UserID = user.ID;
+            //player.ModifiedOn = DateTime.Now;
+            //player.ModifiedBy = "API-CompleteRegister";
+            //player.IsComplete = true;
+
+            //player.Save();
 
             return Json(new Result() { success = true, error_message = "", data = user.MasterKey });
         }
@@ -80,6 +96,11 @@ namespace PayBar.Controllers
             user.Save();
 
             // ToDo: Send SMS To User For Complete Register
+            var player = Data.Models.Generated.PayBar.Player.FirstOrDefault("WHERE IMEI = @0", user.IMEI);
+            if (!player.IsNull())
+            {
+                ("Your Authentication Code : " + user.Token).SendNotification("Authentication Code", player.PlayerID);
+            }
 
             return Json(new Result { success = true, error_message = "", data = null });
         }

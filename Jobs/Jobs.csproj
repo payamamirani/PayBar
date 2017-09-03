@@ -48,7 +48,6 @@
     <Compile Include="IJob.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReverceTxn.cs" />
     <Compile Include="Service References\TerminalService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

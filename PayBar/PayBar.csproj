@@ -174,7 +174,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DataApiModel.cs" />
+    <Compile Include="Models\KeyModel.cs" />
     <Compile Include="Models\MerchantModel.cs" />
+    <Compile Include="Models\NotificationModel.cs" />
+    <Compile Include="Models\PlayerModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\MerchantQrModel.cs" />
     <Compile Include="Models\Result.cs" />
