@@ -20,6 +20,5 @@ namespace Utilities
         public static string TerminalPasswrod { get { return _TermPass; } }
 
         public static int TerminalTypeCode { get { return _PosCondition; } }
-
     }
 }
