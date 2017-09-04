@@ -18,6 +18,7 @@ namespace Utilities
         public static string TerminalUserName { get { return _TermUser; } }
 
         public static string TerminalPasswrod { get { return _TermPass; } }
+
         public static int TerminalTypeCode { get { return _PosCondition; } }
 
     }
