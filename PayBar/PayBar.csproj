@@ -275,6 +275,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{9b4d3a70-7050-4d76-b5cc-bd7f4ee16f9c}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Data\Data.csproj">
       <Project>{a8bf5155-d307-425d-ae37-25c5a1728d06}</Project>
       <Name>Data</Name>

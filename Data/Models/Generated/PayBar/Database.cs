@@ -227,6 +227,26 @@ namespace Data.Models.Generated.PayBar
 		[Column] public bool IsActive { get; set; }
 	}
     
+	[TableName("dbo.NotificationQueue")]
+	[PrimaryKey("ID")]
+	[ExplicitColumns]
+    public partial class NotificationQueue : PayBarDB.Record<NotificationQueue>  
+    {
+		[Column] public long ID { get; set; }
+		[Column] public string Title { get; set; }
+		[Column] public string Content { get; set; }
+		[Column] public int Type { get; set; }
+		[Column] public string PlayerID { get; set; }
+		[Column] public string CellNo { get; set; }
+		[Column] public string Email { get; set; }
+		[Column] public int Status { get; set; }
+		[Column] public string ResultMessage { get; set; }
+		[Column] public DateTime CreatedOn { get; set; }
+		[Column] public string CreatedBy { get; set; }
+		[Column] public DateTime? ModifiedOn { get; set; }
+		[Column] public string ModifiedBy { get; set; }
+	}
+    
 	[TableName("dbo.Players")]
 	[PrimaryKey("ID")]
 	[ExplicitColumns]

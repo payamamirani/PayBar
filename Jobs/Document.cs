@@ -14,7 +14,6 @@ namespace Jobs
             try
             {
                 var toDo = Data.Models.Generated.PayBar.Txn.Fetch("WHERE RespCode = 0 AND IsSetteled = 1 AND DocumentID IS NULL AND SetteledDate IS NOT NULL AND MaxTry - TryCount > 0 AND ( NextRunTime IS NULL OR NextRunTime < GETDATE())");
-                Console.WriteLine(string.Format("\r{0} Count: {1}.", this.GetType().Name, toDo.Count));
 
                 foreach (var item in toDo)
                 {
@@ -23,7 +22,7 @@ namespace Jobs
                     {
                         var title = "ثبت سند واریز از تراکنش با شماره مرجع " + item.RRN;
 
-                        var res = new PetaPoco.Database("PayBar").ExecuteScalar<long>("EXEC dbo.SP_AddDocument @@ID = @0, @@Amount = @1, @@Title = @2, @@DocType = @3, @@CreatedBy = @4, @@TxnID = @5",
+                        var res = new Data.Models.Generated.PayBar.PayBarDB().ExecuteScalar<long>("EXEC dbo.SP_AddDocument @@ID = @0, @@Amount = @1, @@Title = @2, @@DocType = @3, @@CreatedBy = @4, @@TxnID = @5",
                             merchant.AccountID, item.Amount, title, DocumentType.Variz.ToInt(), "JOB-Document-Do", item.ID);
 
                         if (res > 0)
@@ -37,14 +36,16 @@ namespace Jobs
                                 var player = Data.Models.Generated.PayBar.Player.FirstOrDefault("WHERE IMEI = @0", user.IMEI);
                                 if (!player.IsNull())
                                 {
-                                    var msg = Consts.SUCCESS_MESSAGE;
+                                    var document = Data.Models.Generated.PayBar.Document.FirstOrDefault("WHERE ID = @0", item.DocumentID);
+                                    var msg = Consts.DOCUMENT_MESSAGE;
                                     if (!merchant.IsNull())
                                         msg = msg.Replace("[MerchantName]", merchant.FullName);
 
                                     msg = msg.Replace("[AMOUNT]", item.Amount.ToString("#,#"));
                                     msg = msg.Replace("[DT]", item.SetteledDate.Value.ToPersian());
+                                    msg = msg.Replace("[BALANCEAMOUNT]", document.BalanceAmount.ToString("#,#"));
 
-                                    msg.SendNotification(Consts.SUCCESS_TITLE, player.PlayerID);
+                                    Business.FacadePayBar.GetNotificationQueueBusiness().SaveNotification(Consts.DOCUMENT_TITLE, msg, NotificationType.OneSignal, NotificationStatus.ToDo, "Document-Do", player.PlayerID);
                                 }
                             }
                         }
@@ -59,7 +60,7 @@ namespace Jobs
             }
             catch (Exception ex)
             {
-                LogBiz.SaveError("SuccessTxn-Do", ex);
+                LogBiz.SaveError("Document-Do", ex);
             }
         }
     }

@@ -43,9 +43,7 @@ namespace PayBar.Controllers
             // ToDo: Send SMS To User For Complete Register
             var player = Data.Models.Generated.PayBar.Player.FirstOrDefault("WHERE IMEI = @0", user.IMEI);
             if (!player.IsNull())
-            {
-                ("Your Authentication Code : " + user.Token).SendNotification("Authentication Code", player.PlayerID);
-            }
+                Business.FacadePayBar.GetNotificationQueueBusiness().SaveNotification("Authentication Code", "Your Authentication Code : " + user.Token, NotificationType.OneSignal, NotificationStatus.ToDo, "UserController-Register", player.PlayerID);
 
             return Json(new Result { success = true, error_message = "", data = null });
         }
@@ -98,9 +96,7 @@ namespace PayBar.Controllers
             // ToDo: Send SMS To User For Complete Register
             var player = Data.Models.Generated.PayBar.Player.FirstOrDefault("WHERE IMEI = @0", user.IMEI);
             if (!player.IsNull())
-            {
-                ("Your Authentication Code : " + user.Token).SendNotification("Authentication Code", player.PlayerID);
-            }
+                Business.FacadePayBar.GetNotificationQueueBusiness().SaveNotification("Authentication Code", "Your Authentication Code : " + user.Token, NotificationType.OneSignal, NotificationStatus.ToDo, "UserController-ReSendToken", player.PlayerID);
 
             return Json(new Result { success = true, error_message = "", data = null });
         }

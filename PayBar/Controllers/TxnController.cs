@@ -88,7 +88,6 @@ namespace PayBar.Controllers
                 if (!player.IsNull())
                 {
                     var resp = Data.Models.Generated.PayBar.SwResponseCode.FirstOrDefault("WHERE RspCode = @0", txnResult.ResponseCode);
-
                     var msg = Consts.ERROR_MESSAGE;
 
                     if (!merchant.IsNull())
@@ -97,7 +96,7 @@ namespace PayBar.Controllers
                     msg = msg.Replace("[AMOUNT]", model.DecryptData.Amount.ToString("#,#"));
                     msg = msg.Replace("[ERROR]", resp.IsNull() ? txnResult.ResponseCode.ToString() : resp.RespPersianTitle);
 
-                    msg.SendNotification(Consts.ERROR_TITLE, player.PlayerID);
+                    Business.FacadePayBar.GetNotificationQueueBusiness().SaveNotification(Consts.ERROR_TITLE, msg, NotificationType.OneSignal, NotificationStatus.ToDo, "TxnController-Purchase", player.PlayerID);
                 }
                 return Json(new Result() { success = false, error_message = txn.ResponseCode.ToString(), data = null });
             }

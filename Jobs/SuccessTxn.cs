@@ -19,7 +19,6 @@ namespace Jobs
             try
             {
                 var toDo = Data.Models.Generated.PayBar.Txn.Fetch("WHERE RespCode = 0 AND IsSetteled IS NULL AND BusinessDate = CAST(GETDATE() AS DATE) AND MaxTry - TryCount > 0 AND (NextRunTime IS NULL OR NextRunTime < GETDATE())");
-                Console.WriteLine(string.Format("\r{0} Count: {1}.", this.GetType().Name, toDo.Count));
 
                 foreach (var item in toDo)
                 {
@@ -36,9 +35,9 @@ namespace Jobs
                         if (!user.IsNull())
                         {
                             var player = Data.Models.Generated.PayBar.Player.FirstOrDefault("WHERE IMEI = @0", user.IMEI);
-                            var merchant = Data.Models.Generated.PayBar.Merchant.FirstOrDefault("WHERE ID = @0", item.MerchantID);
                             if (!player.IsNull())
                             {
+                                var merchant = Data.Models.Generated.PayBar.Merchant.FirstOrDefault("WHERE ID = @0", item.MerchantID);
                                 var msg = Consts.SUCCESS_MESSAGE;
                                 if (!merchant.IsNull())
                                     msg = msg.Replace("[MerchantName]", merchant.FullName);
@@ -46,7 +45,7 @@ namespace Jobs
                                 msg = msg.Replace("[AMOUNT]", item.Amount.ToString("#,#"));
                                 msg = msg.Replace("[DT]", item.SetteledDate.Value.ToPersian());
 
-                                msg.SendNotification(Consts.SUCCESS_TITLE, player.PlayerID);
+                                Business.FacadePayBar.GetNotificationQueueBusiness().SaveNotification(Consts.SUCCESS_TITLE, msg, NotificationType.OneSignal, NotificationStatus.ToDo, "SuccessTxn-Do", player.PlayerID);
                             }
                         }
                     }

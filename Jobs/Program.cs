@@ -18,7 +18,7 @@ namespace Jobs
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Begin");
+            Console.WriteLine("Begin\n");
 
             ServicePointManager.ServerCertificateValidationCallback += (sender1, certificate, chain, sslPolicyErrors) => true;
             try
@@ -35,8 +35,11 @@ namespace Jobs
                         var task = string.Format("{0}#{1}", job.ClassName, "Do");
                         if (!RunningTask.Contains(task))
                         {
+                            lock (RunningTask)
+                            {
+                                RunningTask.Add(task);
+                            }
                             Task.Run(() => CreateInstanseForJob(job));
-                            RunningTask.Add(task);
                         }
                     }
 
@@ -63,7 +66,10 @@ namespace Jobs
                 object result = method.Invoke(instance, data);
 
                 var task = string.Format("{0}#{1}", job.ClassName, "Do");
-                RunningTask.Remove(task);
+                lock (RunningTask)
+                {
+                    RunningTask.Remove(task);
+                }
             }
             catch (Exception ex)
             {

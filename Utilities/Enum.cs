@@ -18,4 +18,24 @@ namespace Utilities
         Charge = 15,
         Bill = 17
     }
+
+    public enum DocumentType
+    {
+        Variz = 1,
+        Bardasht = 2
+    }
+
+    public enum NotificationType
+    {
+        SMS = 1,
+        Email = 2,
+        OneSignal = 3
+    }
+
+    public enum NotificationStatus
+    {
+        ToDo = 1,
+        Done = 2,
+        Error = 3
+    }
 }
